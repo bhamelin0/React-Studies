@@ -3,11 +3,13 @@ import './App.css';
 import Profile from './ReactFirstComponent/MyFirstComponent.js'; 
 import ProfileTwo from './ReactFirstComponent/MySecondComponent.js'; 
 import GoFish from 'react-go-fish/src/GoFish.js';
+import ProfileToggler from './PictureToggler/Profiletoggler.js';
 
 const PAGES = { 
   MyFirstComponent : "MyFirstComponent",
   MySecondComponent : "MySecondComponent",
-  GoFish: "GoFish"
+  GoFish: "GoFish",
+  DynamicProfileToggler : "Dynamic Profile Toggler"
 }
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
         <a className="index" href="/MyFirstComponent/index.js" onClick={(e) => renderPage(e, PAGES.MyFirstComponent)}>React First Component</a>
         <a className="index" href="/MySecondComponent/index.js" onClick={(e) => renderPage(e, PAGES.MySecondComponent)} >React Second Component</a>
         <a className="index" href="/GoFish/index.js" onClick={(e) => renderPage(e, PAGES.GoFish)} >Imported Go Fish Game</a>
+        <a className="index" href="/DynamicProfileToggler.js" onClick={(e) => renderPage(e, PAGES.DynamicProfileToggler)}>Dynamic and scaling toggler</a>
       </div>
 
       <Router currentPage={currentPage}/>
@@ -39,11 +42,10 @@ function Router({currentPage}) {
         currentPage === PAGES.MyFirstComponent ? <Profile/> :
         currentPage === PAGES.MySecondComponent ? <ProfileTwo/> : 
         currentPage === PAGES.GoFish ? <GoFish/> : 
-        <div>{currentPage}</div>
-
+        currentPage === PAGES.DynamicProfileToggler ? <ProfileToggler/> : 
+        null
       }
     </div>
-
   );
 }
 
