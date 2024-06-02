@@ -1,29 +1,38 @@
-import React, { useState } from 'react';
-import Profile from '../ReactFirstComponent/MyFirstComponent.js'; 
-import ProfileTwo from '../ReactFirstComponent/MySecondComponent.js'; 
+import React, { useState, useEffect } from 'react';
+import DynamicProfile from './DynamicProfile.js'; 
 
 export default function ProfileToggler() {
 
   const [faveIndex, setFaveIndex] = useState(0);
+  const [data, setData] = useState(null);
 
   function onRadioClick(e) {
     setFaveIndex(e.target.value);
   }
 
-  // TODO: Build this pattern out via a map and send the data as an object
+  useEffect(() => {
+    fetch('http://localhost:3001/profiles')
+      .then(response => response.json())
+      .then(json => setData(json))
+      .catch(error => console.error(error));
+  }, []);
+
   return (
     <div>
       <legend>Which animal is your favorite animal?</legend>
 
-      <div>
-        <input type="radio" id="bird" name="images" value="0" checked={faveIndex == 0} onClick={onRadioClick} />
-        <label for="bird">The Birds</label>
+      {data ?
+        <div>
+          {data.map((profile) => 
+            <div>
+              <input type="radio" id={profile.id} name="images" value={data.indexOf(profile)} checked={faveIndex == data.indexOf(profile)} onClick={onRadioClick} />
+              <label for={profile.id}>{profile.name}</label>
+            </div>
+          )}
+          <DynamicProfile src={data[faveIndex].url} name={data[faveIndex].name}/>
+        </div>
 
-        <input type="radio" id="dog" name="images" value="1" checked={faveIndex == 1} onClick={onRadioClick} />
-        <label for="dog">The Dog</label>
-      </div>
-
-      {faveIndex == 0 ? <Profile/> : <ProfileTwo/>}
+      : <div>loading...</div> }
     </div>
   )
 }
