@@ -25,7 +25,7 @@ export default function ProfileToggler() {
         <div>
           {data.map((profile) => 
             <div>
-              <input type="radio" id={profile.id} name="images" value={data.indexOf(profile)} checked={faveIndex == data.indexOf(profile)} onClick={onRadioClick} />
+              <input type="radio" id={profile.id} name="images" value={data.indexOf(profile)} checked={faveIndex === data.indexOf(profile)} onClick={onRadioClick} />
               <label for={profile.id}>{profile.name}</label>
             </div>
           )}
