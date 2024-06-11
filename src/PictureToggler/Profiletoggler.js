@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import DynamicProfile from './DynamicProfile.js'; 
 
 export default function ProfileToggler() {
@@ -19,14 +20,14 @@ export default function ProfileToggler() {
 
   return (
     <div>
-      <legend>Which animal is your favorite animal?</legend>
+      <StyledLegend>Which animal is your favorite animal?</StyledLegend>
 
       {data ?
         <div>
           {data.map((profile) => 
-            <div>
-              <input type="radio" id={profile.id} name="images" value={data.indexOf(profile)} checked={faveIndex === data.indexOf(profile)} onClick={onRadioClick} />
-              <label for={profile.id}>{profile.name}</label>
+            <div key={profile.id}>
+              <input type="radio" id={profile.id} name="images" value={data.indexOf(profile)} checked={faveIndex == data.indexOf(profile)} onChange={onRadioClick} />
+              <label htmlFor={profile.id}>{profile.name}</label>
             </div>
           )}
           <DynamicProfile src={data[faveIndex].url} name={data[faveIndex].name}/>
@@ -36,4 +37,8 @@ export default function ProfileToggler() {
     </div>
   )
 }
-  
+
+const StyledLegend = styled.legend`
+  font-family: 'Brush Script MT', cursive;
+  font-size: 2rem;
+`;
